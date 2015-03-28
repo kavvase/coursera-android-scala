@@ -23,5 +23,4 @@ class HelloScaloid extends SActivity {
     } padding 20.dip
   }
 
-
 }

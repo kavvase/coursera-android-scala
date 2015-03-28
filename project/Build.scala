@@ -35,7 +35,11 @@ object Build extends android.AutoBuild {
     .settings(mySettings: _*)
     .settings(libraryDependencies ++= compile(proguard, scaloid))
 
-  lazy val helloScaloid= Project("hello-scaloid", file("hello-scaloid"))
+  lazy val helloScaloid = Project("hello-scaloid", file("hello-scaloid"))
+    .settings(mySettings: _*)
+    .settings(libraryDependencies ++= compile(proguard, scaloid))
+
+  lazy val theAnswer = Project("the-answer", file("the-answer"))
     .settings(mySettings: _*)
     .settings(libraryDependencies ++= compile(proguard, scaloid))
 

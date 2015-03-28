@@ -3,10 +3,13 @@ import sbt.Keys._
 import sbt._
 
 object Build extends android.AutoBuild {
-  import Dependencies._
 
   lazy val mySettings = super.settings ++ android.Plugin.androidBuild ++ Seq(
     scalaVersion := "2.11.6",
+    scalacOptions in Compile ++= Seq(
+      "-feature"
+    ),
+    sourceGenerators in Compile := Seq((sourceGenerators in Compile).value.last),
     platformTarget in Android := "android-22",
     proguardCache in Android ++= Seq(
       ProguardCache("org.scaloid") % "org.scaloid"
@@ -15,10 +18,6 @@ object Build extends android.AutoBuild {
       "-dontobfuscate",
       "-dontoptimize"
     ),
-    scalacOptions in Compile ++= Seq(
-      "-feature"
-    ),
-    sourceGenerators in Compile := Seq((sourceGenerators in Compile).value.last),
     shellPrompt := { s =>
       (scala.Console.CYAN + "%s > " + scala.Console.RESET) format {
         Project.extract(s).currentProject.id
@@ -28,8 +27,7 @@ object Build extends android.AutoBuild {
     install <<= install in Android
   )
 
-  lazy val root = Project("coursera-android-scala", file("."))
-    .aggregate(helloAndroid)
+  import Dependencies._
 
   lazy val helloAndroid = Project("hello-android", file("hello-android"))
     .settings(mySettings: _*)
